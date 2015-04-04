@@ -1,20 +1,20 @@
-var nssocket = require('nssocket');
+var net = require('net');
 
-var server = nssocket.createServer(function (socket) {
+var HOST = '127.0.0.1';
+var PORT = 6969;
 
-  console.log("Opening connection to server");
-  socket.send('connected');
+net.createServer(function (socket) {
+  console.log('Client has connected to server');
 
-  socket.data('xboxEvent', function (data) {
-    // data == data from client (xbox controller)
-    console.dir(data);
-    // send input to phone
+  socket.on(['data', 'client'], function (data) {
+    json = JSON.parse(data.toString());
+    console.log(json);
   });
 
-  socket.on('close', function () {
-    console.log("Closing connection - server");
+  socket.on('close', function (data) {
+    console.log('Connection has closed');
   });
 
-});
+}).listen(PORT, HOST);
 
-server.listen(6785);
+console.log("Listening on port " + PORT);

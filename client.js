@@ -1,11 +1,18 @@
-var nssocket = require('nssocket');
+var net = require('net');
 
-var outbound = new nssocket.NsSocket();
+var HOST = '127.0.0.1';
+var PORT = 6969;
 
-outbound.data('connected', function () {
-  // example JSON from xbox controller
-  outbound.send('xboxEvent', { id: 'L', val: 32000 });
-  outbound.end();
+var client = new net.Socket();
+
+client.connect(PORT, HOST, function () {
+  xboxEventResult = {id: 'L', val: 32000};
+
+  var json = JSON.stringify(xboxEventResult);
+  client.write(json);
+
+  setTimeout(function () {
+    client.destroy();
+  }, 1000);
 });
 
-outbound.connect(6785);
