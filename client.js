@@ -1,6 +1,6 @@
 var net = require('net');
 
-var HOST = '127.0.0.1';
+var HOST = 'rcgd.cloudapp.net';
 var PORT = 6969;
 
 var client = new net.Socket();
@@ -10,8 +10,5 @@ client.connect(PORT, HOST, function () {
   var json = JSON.stringify(data);
   client.write(json);
 
-  setTimeout(function () {
-    client.destroy();
-  }, 1000);
 });
 

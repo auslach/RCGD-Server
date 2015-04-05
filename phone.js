@@ -1,6 +1,6 @@
 var net = require('net');
 
-var HOST = '127.0.0.1';
+var HOST = 'rcgd.cloudapp.net';
 var PORT = 6969;
 
 var client = new net.Socket();

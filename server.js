@@ -1,6 +1,6 @@
 var net = require('net');
 
-var HOST = '127.0.0.1';
+var HOST = '0.0.0.0';
 var PORT = 6969;
 var phoneActive = null;
 
@@ -34,4 +34,4 @@ net.createServer(function (socket) {
   });
 }).listen(PORT, HOST);
 
-console.log("Listening on port " + PORT);
+console.log("Listening on host " + HOST + " & port " + PORT);
