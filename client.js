@@ -9,6 +9,9 @@ client.connect(PORT, HOST, function () {
   var data = { id: 'L', val: 32000, clientType: "c" };
   var json = JSON.stringify(data);
   client.write(json);
+  setTimeout(function () {
+    client.destroy();
+  }, 1000);
 
 });
 

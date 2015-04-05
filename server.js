@@ -6,6 +6,7 @@ var phoneActive = null;
 
 net.createServer(function (socket) {
 
+  console.log('Connection started');
   var dataBuffer = "";
 
   function processDataBuffer(){
@@ -13,6 +14,8 @@ net.createServer(function (socket) {
     var dataItems = dataBuffer.toString().split('\n')
 
     if(dataItems.length >= 2){
+      // clear processed data item
+      dataBuffer = dataItems[dataItems.length-1];
       //we have a processable data item
       for(var i = 0; i < dataItems.length - 1; ++i){
         json = JSON.parse(dataItems[i].toString())
@@ -24,7 +27,7 @@ net.createServer(function (socket) {
           if (phoneActive != null) {
             // client is client, push data to open phone connection
             console.log("phone is connected");
-            phoneActive.write(data);
+            phoneActive.write(JSON.stringify(json) + "\n");
           }
         } else if (json['clientType'] == "p") {
           console.log('Server has heard from phone');
@@ -36,11 +39,10 @@ net.createServer(function (socket) {
   }
 
   socket.on('data', function (data) {
-    //console.log(data);
 
     dataBuffer += data
     processDataBuffer();
-    
+
   });
 
   socket.on('close', function(data) {
